@@ -1,22 +1,29 @@
 # VendaIA
 
-Plataforma de inteligência artificial para atendimento, vendas e automação de empresas.
+Plataforma global de IA para vendas, atendimento, tradução e gestão de leads.
 
-## V2
-- Next.js + React
+## O que já está incluído
+- Next.js + React + TypeScript
 - PostgreSQL + Prisma
-- Registo, login e logout
-- Sessões seguras em cookie HttpOnly
-- Passwords com scrypt + salt
-- Agente de IA com OpenAI
+- Registo, login, logout e sessões HttpOnly
+- Agente de vendas com OpenAI
 - Conversas persistentes por utilizador
-- Rotas de IA protegidas por autenticação
+- Tradutor IA multilíngue
+- Transcrição de voz
+- Texto para voz
+- CRM simples de leads
+- Dashboard responsivo para telemóvel e desktop
+- Planos e estrutura de produto internacional
 
-## Configuração
+## Configuração local
 1. Copie `.env.example` para `.env`.
 2. Preencha `DATABASE_URL` e `OPENAI_API_KEY`.
 3. Execute `npm install`.
-4. Execute `npm run db:push` para criar/atualizar as tabelas.
-5. Execute `npm run build` e `npm start`.
+4. Execute `npm run db:push`.
+5. Execute `npm run build`.
+6. Execute `npm start`.
 
-Nunca publique as chaves reais no GitHub. Em produção, configure as variáveis de ambiente no provedor de hospedagem.
+## Produção
+Configure as mesmas variáveis no provedor de hospedagem. Nunca coloque chaves reais no GitHub.
+
+Para ativar cobrança real, configure as variáveis Stripe e ligue o fluxo de checkout/webhook a um provedor de pagamentos compatível com o país do cliente.
