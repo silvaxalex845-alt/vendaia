@@ -1,8 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
-  const [message,setMessage]=useState(""); const [reply,setReply]=useState(""); const [loading,setLoading]=useState(false);
-  async function send(){ if(!message.trim()) return; setLoading(true); setReply(""); const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message})}); const d=await r.json(); setReply(d.reply||d.error); setLoading(false); }
-  return <main style={{maxWidth:900,margin:"0 auto",padding:40,fontFamily:"Arial"}}><h1>VendaIA</h1><p>IA para atendimento, vendas e automação.</p><textarea value={message} onChange={e=>setMessage(e.target.value)} placeholder="Digite uma mensagem para o agente VendaIA" style={{width:"100%",minHeight:140,padding:16}}/><button onClick={send} disabled={loading} style={{marginTop:12,padding:"12px 24px"}}>{loading?"Pensando...":"Enviar"}</button>{reply&&<section style={{marginTop:30,padding:20,border:"1px solid #ddd"}}><strong>Agente VendaIA</strong><p>{reply}</p></section>}</main>
-}
+type User={name:string|null;email:string};
+export default function Home(){const router=useRouter();const[user,setUser]=useState<User|null>(null);const[message,setMessage]=useState("");const[reply,setReply]=useState("");const[loading,setLoading]=useState(false);const[conversationId,setConversationId]=useState<string|undefined>();
+useEffect(()=>{fetch("/api/auth/me").then(async r=>{if(!r.ok){router.replace("/login");return}const d=await r.json();setUser(d.user)}).catch(()=>router.replace("/login"))},[router]);
+async function send(){if(!message.trim())return;setLoading(true);setReply("");const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,conversationId})});const d=await r.json();if(r.status===401){router.replace("/login");return}setReply(d.reply||d.error);if(d.conversationId)setConversationId(d.conversationId);setMessage("");setLoading(false)}
+async function logout(){await fetch("/api/auth/logout",{method:"POST"});router.replace("/login")}
+if(!user)return <main className="auth"><div className="card"><h1>VendaIA</h1><p>A carregar a sua conta...</p></div></main>;
+return <main className="shell"><header className="top"><div><div className="brand">VendaIA</div><div className="muted">IA para atendimento, vendas e automação.</div></div><button className="logout" onClick={logout}>Sair</button></header><section className="chatbox"><div className="user">Olá, {user.name || user.email} 👋</div><p className="muted">O teu agente de IA está pronto.</p><textarea value={message} onChange={e=>setMessage(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}}} placeholder="Escreva a sua mensagem..."/><div className="row"><button className="send" onClick={send} disabled={loading}>{loading?"A pensar...":"Enviar para o agente"}</button><span className="muted">Enter para enviar · Shift+Enter para nova linha</span></div>{reply&&<div className="reply"><strong>Agente VendaIA</strong><br/>{reply}</div>}</section></main>}
