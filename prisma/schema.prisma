@@ -2,6 +2,38 @@ generator client { provider = "prisma-client-js" }
 
 datasource db { provider = "postgresql" url = env("DATABASE_URL") }
 
-model User { id String @id @default(cuid()); email String @unique; name String?; createdAt DateTime @default(now()); conversations Conversation[] }
-model Conversation { id String @id @default(cuid()); userId String; title String?; createdAt DateTime @default(now()); user User @relation(fields:[userId], references:[id]); messages Message[] }
-model Message { id String @id @default(cuid()); conversationId String; role String; content String; createdAt DateTime @default(now()); conversation Conversation @relation(fields:[conversationId], references:[id]) }
+model User {
+  id String @id @default(cuid())
+  name String?
+  email String @unique
+  passwordHash String
+  createdAt DateTime @default(now())
+  sessions Session[]
+  conversations Conversation[]
+}
+model Session {
+  id String @id @default(cuid())
+  tokenHash String @unique
+  userId String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user User @relation(fields:[userId], references:[id], onDelete: Cascade)
+  @@index([userId])
+}
+model Conversation {
+  id String @id @default(cuid())
+  userId String
+  title String?
+  createdAt DateTime @default(now())
+  user User @relation(fields:[userId], references:[id], onDelete: Cascade)
+  messages Message[]
+}
+model Message {
+  id String @id @default(cuid())
+  conversationId String
+  role String
+  content String
+  createdAt DateTime @default(now())
+  conversation Conversation @relation(fields:[conversationId], references:[id], onDelete: Cascade)
+  @@index([conversationId])
+}
