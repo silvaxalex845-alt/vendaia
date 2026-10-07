@@ -1,0 +1,36 @@
+{
+  "title": "VendaIA Lead Intelligence",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "queries": {
+      "title": "Search queries",
+      "type": "array",
+      "description": "Business/category + location searches, e.g. restaurants in Luanda.",
+      "editor": "stringList",
+      "default": ["restaurants in Luanda"],
+      "items": { "type": "string" }
+    },
+    "maxLeads": {
+      "title": "Maximum leads",
+      "type": "integer",
+      "description": "Maximum number of qualified business records to return.",
+      "default": 25,
+      "minimum": 1,
+      "maximum": 500
+    },
+    "language": {
+      "title": "Google Maps language",
+      "type": "string",
+      "default": "en",
+      "enum": ["en", "pt", "fr", "es"]
+    },
+    "country": {
+      "title": "Country code",
+      "type": "string",
+      "description": "Two-letter country code used as metadata.",
+      "default": "ao"
+    }
+  },
+  "required": ["queries"]
+}
