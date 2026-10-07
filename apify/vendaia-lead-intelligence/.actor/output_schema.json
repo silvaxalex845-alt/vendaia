@@ -1,0 +1,13 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "VendaIA Lead Intelligence output",
+  "description": "Qualified business leads returned by the Actor.",
+  "properties": {
+    "leads": {
+      "type": "string",
+      "title": "Qualified leads",
+      "description": "Open the default dataset containing the discovered and scored leads.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}
