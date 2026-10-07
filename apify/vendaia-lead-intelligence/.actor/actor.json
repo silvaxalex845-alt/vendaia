@@ -1,0 +1,15 @@
+{
+  "actorSpecification": 1,
+  "name": "vendaia-lead-intelligence",
+  "title": "VendaIA Lead Intelligence",
+  "description": "Find local businesses and prioritize the best sales opportunities with structured lead data and qualification scoring.",
+  "version": "0.0",
+  "buildTag": "latest",
+  "meta": {
+    "templateId": "ai-generated-actor",
+    "generatedBy": "GPT-5.6 Luna"
+  },
+  "dockerfile": "./Dockerfile",
+  "input": "./INPUT_SCHEMA.json",
+  "readme": "./README.md"
+}
