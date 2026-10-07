@@ -1,0 +1,11 @@
+{
+  "name": "vendaia-lead-intelligence",
+  "version": "0.1.0",
+  "description": "AI-ready local business lead discovery and qualification Actor for Apify.",
+  "type": "module",
+  "scripts": { "start": "node src/main.js" },
+  "dependencies": {
+    "apify": "^3.4.0",
+    "crawlee": "^3.13.0"
+  }
+}
