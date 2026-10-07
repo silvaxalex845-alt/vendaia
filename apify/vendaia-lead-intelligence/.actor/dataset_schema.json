@@ -1,0 +1,44 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": { "type": "string" },
+      "query": { "type": "string" },
+      "website": { "type": ["string", "null"] },
+      "phone": { "type": ["string", "null"] },
+      "rating": { "type": ["number", "null"] },
+      "reviews": { "type": ["number", "null"] },
+      "sourceUrl": { "type": "string" },
+      "country": { "type": "string" },
+      "collectedAt": { "type": "string" },
+      "leadScore": { "type": "number", "minimum": 0, "maximum": 100 },
+      "opportunity": { "type": "string" },
+      "qualificationReasons": { "type": "array", "items": { "type": "string" } },
+      "recommendedAction": { "type": "string" }
+    },
+    "required": ["name", "leadScore", "opportunity", "sourceUrl"]
+  },
+  "views": {
+    "overview": {
+      "title": "Qualified leads",
+      "transformation": {
+        "fields": ["name", "leadScore", "opportunity", "phone", "website", "rating", "reviews", "query"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "name": { "label": "Business" },
+          "leadScore": { "label": "Lead score", "format": "number" },
+          "opportunity": { "label": "Opportunity" },
+          "phone": { "label": "Phone" },
+          "website": { "label": "Website", "format": "link" },
+          "rating": { "label": "Rating", "format": "number" },
+          "reviews": { "label": "Reviews", "format": "number" },
+          "query": { "label": "Search" }
+        }
+      }
+    }
+  }
+}
